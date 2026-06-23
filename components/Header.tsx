@@ -9,14 +9,7 @@ export default function Header() {
                 <span>Todo or Not Todo</span>
             </Link>
 
-            <nav className="flex gap-4 text-sm text-slate-600 font-medium">
-                <Link href="/about" className="hover:text-slate-900 transition">
-                    解説
-                </Link>
-                <Link href="/privacy" className="hover:text-slate-900 transition">
-                    規約
-                </Link>
-            </nav>
+
         </header>
     );
 }

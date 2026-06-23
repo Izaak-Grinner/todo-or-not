@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import TaskList from "@/components/tasks/TaskList";
 import TaskCreation from "@/components/tasks/TaskCreation";
-import TaskShare from "@/components/tasks/TaskShare";
 
 type Mode = "see" | "make" | "share";
 
@@ -14,7 +13,6 @@ export default function Home() {
         switch (mode) {
           case "see": return <TaskList />;
           case "make": return <TaskCreation />;
-          case "share": return <TaskShare />;
           default: return null;
         }
       })()}
@@ -23,7 +21,6 @@ export default function Home() {
         {[
           { id: "see", label: "自分のタスクを見る" },
           { id: "make", label: "タスクを作る" },
-          { id: "share", label: "人のタスクをみる" },
         ].map((btn) => (
           // 現在のモード「以外」のボタンだけをレンダリングする
           mode !== btn.id && (

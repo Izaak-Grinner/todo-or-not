@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { dummy_tasks, UserTask } from "./task";
+import { dummy_tasks, UserTask } from "../../lib/taskTypes";
 
 export default function TaskCreation() {
     const formRef = useRef<HTMLFormElement>(null);

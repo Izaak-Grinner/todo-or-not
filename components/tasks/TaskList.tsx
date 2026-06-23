@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Task, UserTask, dummy_tasks, dummy_user_tasks } from "./task";
+import { Task, UserTask, dummy_tasks, dummy_user_tasks } from "../../lib/taskTypes";
 
 // ダミーデータ
 

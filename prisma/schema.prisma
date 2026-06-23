@@ -1,13 +1,50 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../generated/prisma" // Prisma Client の生成先（Prisma 7 では output が必須）
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+// （User、Task、UserTask などのモデル定義はそのまま下に残してOKです！）
+
+// 1. ユーザーテーブル
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  // リレーション：一人のユーザーは複数のタスク回答を持つ
+  userTasks UserTask[]
+}
+
+// 2. タスク（お題）テーブル
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  todo        String // To Doを選んだときの具体的な内容
+  notTodo     String // Not To Doを選んだときの具体的な内容
+  createdAt   DateTime @default(now())
+
+  // リレーション：一つのタスクは複数のユーザーから回答される
+  userTasks UserTask[]
+}
+
+// 3. ユーザーの回答（中間テーブル）
+model UserTask {
+  id        String   @id @default(uuid())
+  userId    String
+  taskId    String
+  selection Boolean // true = 👍 To Do, false = 🙅‍♀️ Not To Do
+  createdAt DateTime @default(now())
+
+  // リレーションの設定
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  // 同じユーザーが同じタスクに2回回答できないようにユニーク制約をつける
+  @@unique([userId, taskId])
 }

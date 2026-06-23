@@ -14,6 +14,11 @@ export interface UserTask {
     selection: boolean; // true: To Do, false: Not To Do
 }
 
+export interface User {
+    userID: string,
+    taskName: string,
+}
+
 export const dummy_tasks: Task[] = [
     { id: 1, title: "トロッコ問題", description: "5人を救うために1人を犠牲にするか", todo: "レバーを引く", notTodo: "何もしない" },
     { id: 2, title: "優しい嘘", description: "病気の友人に真実を隠すか", todo: "嘘をつく", notTodo: "本当のことを言う" },
