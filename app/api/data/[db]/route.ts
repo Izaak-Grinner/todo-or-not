@@ -36,29 +36,26 @@ export async function GET(
 // 【POST】新規作成処理
 export async function POST(
     request: Request,
-    { params }: { params: Promise<{ db: string }> } // 💡 型を Promise で包む
+    { params }: { params: Promise<{ db: string }> }
 ) {
     try {
-        // 💡 params を非同期で解決（アンラップ）する
         const { db } = await params;
 
         if (!ALLOWED_DATABASES.includes(db as any)) {
-            return NextResponse.json(
-                { error: `無効なエンドポイントです。'${db}' にはアクセスできません。` },
-                { status: 400 }
-            );
+            return NextResponse.json({ error: "無効なエンドポイントです" }, { status: 400 });
         }
 
         const body = await request.json();
         const model = (prisma as any)[db];
 
-        const newData = await model.create({
-            data: body,
-        });
+        // 💡 修正箇所: 配列なら createMany、単体なら create を実行
+        const result = Array.isArray(body)
+            ? await model.createMany({ data: body })
+            : await model.create({ data: body });
 
-        return NextResponse.json(newData, { status: 201 });
-    } catch (error) {
+        return NextResponse.json(result, { status: 201 });
+    } catch (error: any) {
         console.error("API Gateway POST Error:", error);
-        return NextResponse.json({ error: "データの作成に失敗しました" }, { status: 500 });
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

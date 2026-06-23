@@ -339,6 +339,14 @@ export type TaskScalarRelationFilter = {
   isNot?: Prisma.TaskWhereInput
 }
 
+export type StringFieldUpdateOperationsInput = {
+  set?: string
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type TaskCreateNestedOneWithoutUserTasksInput = {
   create?: Prisma.XOR<Prisma.TaskCreateWithoutUserTasksInput, Prisma.TaskUncheckedCreateWithoutUserTasksInput>
   connectOrCreate?: Prisma.TaskCreateOrConnectWithoutUserTasksInput

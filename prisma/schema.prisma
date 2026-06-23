@@ -10,16 +10,6 @@ datasource db {
 // （User、Task、UserTask などのモデル定義はそのまま下に残してOKです！）
 
 // 1. ユーザーテーブル
-model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  createdAt DateTime @default(now())
-
-  // リレーション：一人のユーザーは複数のタスク回答を持つ
-  userTasks UserTask[]
-}
-
 // 2. タスク（お題）テーブル
 model Task {
   id          String   @id @default(uuid())
@@ -42,7 +32,6 @@ model UserTask {
   createdAt DateTime @default(now())
 
   // リレーションの設定
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
 
   // 同じユーザーが同じタスクに2回回答できないようにユニーク制約をつける
